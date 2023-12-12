@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+        /* Add your custom CSS styles here */
+        </style>
+    </head>
+    <body>
+        <h1>Photo Gallery</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Choose a file to upload:</label>
+        <input type="file" id="file" name="file" accept="image/*" required>
+        <button type="submit">Upload</button>
+        </form>
+        <div id="gallery">
+        <!-- Display the uploaded pictures here -->
+        </div>
+        <div id="comments">
+        <!-- Display the comments here -->
+        <form action="/comment" method="post">
+            <label for="name">Your name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="comment">Your comment:</label>
+            <textarea id="comment" name="comment" rows="5" cols="40" required>Enter a comment about your photo here...</textarea>
+            <button type="submit">Post</button>
+        </form>
+        </div>
+        <a href="/download" download="photos.zip">Download all photos</a>
+    </body>
+        
