@@ -10,6 +10,15 @@ const init = async () => {
         host: 'localhost'
     });
 
+
+server.route({
+    method: 'GET',
+    path: '/',
+    handler: (request, h) => {
+        return ' Hello World';
+    }
+});
+
     await server.start();
     console.log('Server is running on %s', server.info.uri);
 };
