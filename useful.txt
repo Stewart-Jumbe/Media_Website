@@ -1,0 +1,10 @@
+useful commands:
+
+docker run -it -p 9001:3000 -v ${PWD}:/app node-media-website-docker-01
+
+ explainer: docker run: This is the command to start a new Docker container.
+-it: These options tell Docker to allocate a pseudo-TTY connected to the container’s stdin and make it interactive.
+-p 9001:3000: This option tells Docker to map port 4200 inside the Docker container to port 9001 on your host machine. This means that if your application inside the Docker container is running on port 4200, you can access it at port 9001 on your host machine.
+-v ${PWD}:/app: This option tells Docker to create a volume that maps the current directory (${PWD}) on your host machine to the /app directory in the Docker container. This means that changes made in the current directory on your host machine will be reflected in the /app directory inside the Docker container, and vice versa.
+node-media-website-docker-01: This is the name of the Docker image to start the container from.
+So, in summary, this command starts a new interactive Docker container from the node-media-website-docker-01 image, maps port 3000 in the container to port 9001 on the host, and syncs the current directory on the host with the /app directory in the container. If you have any other questions, feel free to ask! I’m here to help.

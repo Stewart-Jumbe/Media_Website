@@ -17,7 +17,7 @@ const fileHandler = new FileHandler(Path.join(__dirname, 'files'));
 const start = async () => {
     const server = Hapi.server({
         port: 3000,
-        host: 'localhost',//'0.0.0.0', // Changed from 'localhost to make the sever accessible on local network
+        host: '0.0.0.0',//'0.0.0.0', // Changed from 'localhost to make the sever accessible on local network
         routes:{
             files:{
                 relativeTo: Path.join(__dirname,'public')
