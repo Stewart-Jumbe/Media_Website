@@ -7,17 +7,17 @@ const Hapi = require('@hapi/hapi');
 // Importing path
 const Path = require ('path')
 
-// Importing imageHandler
-const ImageHandler = require('./imageHandler');
+// Importing fileHandler class able to handle vides and photos
+const FileHandler = require('./fileHandler');
 
 // Instantiating imageHandler
-const imageHandler = new ImageHandler(Path.join(__dirname, 'images'));
+const fileHandler = new FileHandler(Path.join(__dirname, 'files'));
 
 // Creating a server 
 const start = async () => {
     const server = Hapi.server({
         port: 3000,
-        host: 'localhost',
+        host: 'localhost',//'0.0.0.0', // Changed from 'localhost to make the sever accessible on local network
         routes:{
             files:{
                 relativeTo: Path.join(__dirname,'public')
@@ -31,7 +31,7 @@ const start = async () => {
     // GET req serving index.html file
     server.route({
         method: 'GET',
-        path: '/index',
+        path: '/',
         handler: (request, h) => {
             return h.file('index.html');
         }   
@@ -46,7 +46,9 @@ const start = async () => {
                 output: 'stream',
                 parse: true,
                 allow: 'multipart/form-data',
-                multipart:true
+                multipart:true,
+                maxBytes: 2147483648 // Increase max payload size to 2GB
+
             }
         },
         handler: async (request, h) => {
@@ -59,19 +61,19 @@ const start = async () => {
             console.log(`Name: ${name}`);
             console.log(`Comment: ${comment}`);
             console.log('File:', file);
-            console.log(`Payload: ${data}`);
 
             // Check if file data is present
             if (file) {
                 console.log('filename: ', file.hapi.filename);
 
                 // Ensure that file data is directly accessible
+                //collecting chuncks of data into buffer
                 let chunks = [];
                 for await (let chunk of file) {
                     chunks.push(chunk);
                 }
                 let buffer = Buffer.concat(chunks);
-                await imageHandler.saveImage(file.hapi.filename, buffer);
+                await fileHandler.saveFile(file.hapi.filename, buffer);
                 return h.response('Image uploaded successfully!');
             } else {
                 return h.response('No image data received. Please ensure you are uploading a valid image file.').code(400);
